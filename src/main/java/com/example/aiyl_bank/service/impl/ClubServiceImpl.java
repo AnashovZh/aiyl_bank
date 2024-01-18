@@ -54,6 +54,7 @@ public class ClubServiceImpl implements ClubService {
 
     @Override
     public String updateClubByIdAndCountryId(Long id, Long countryId, ClubRequest clubRequest) {
+        log.info("updateClubByIdAndCountryId методу ийгиликутту башталды");
         String clubMessage = String.format(" %s IDдеги клуб табылган жок !!!", id);
         String countryMessage = String.format("Бул %s - ID де олко жок", id);
         Country country = countryRepo.findById(countryId).orElseThrow(
@@ -64,15 +65,18 @@ public class ClubServiceImpl implements ClubService {
         club.setName(clubRequest.getName());
         club.setPrice(clubRequest.getPrice());
          clubRepo.save(club);
+        log.info("updateClubByIdAndCountryId методу ийгиликутту аяктады");
         return String.format("%s ID деги олконун %s аттуу клубу ийгиликтуу озгорду.",countryId,club.getName());
     }
 
     @Override
     public String deleteByIdAndCountryId(Long id, Long countryId) {
+        log.info("deleteByIdAndCountryId методу ийгиликтуу башталды");
         String clubMessage = String.format(" %s IDдеги клуб табылган жок !!!", id);
         Club club = clubRepo.getByIdAndCountryId(id, countryId).orElseThrow(
                 () -> new NotFoundException(clubMessage));
         clubRepo.delete(club);
+        log.info("deleteByIdAndCountryId методу ийгиликтуу аяктады");
         return String.format( "%s IDдеги клуб ийгиликтуу очурулду .",id);
     }
 }
